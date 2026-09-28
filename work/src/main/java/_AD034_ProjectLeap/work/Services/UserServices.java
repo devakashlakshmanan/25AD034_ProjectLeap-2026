@@ -4,20 +4,20 @@ import _AD034_ProjectLeap.work.DTO.UserRequestDTO;
 import _AD034_ProjectLeap.work.DTO.UserResponseDTO;
 import _AD034_ProjectLeap.work.Models.User;
 import _AD034_ProjectLeap.work.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserServices {
+
     private final UserRepository userRepository;
 
     public UserServices(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    // CREATE USER
+    // CREATE
     public UserResponseDTO createUser(UserRequestDTO request) {
 
         User user = new User();
@@ -33,32 +33,28 @@ public class UserServices {
 
         User savedUser = userRepository.save(user);
 
-        return convertToResponseDTO(savedUser);
+        return convertToResponse(savedUser);
     }
 
-
-    // GET ALL USERS
+    // READ ALL
     public List<UserResponseDTO> getAllUsers() {
 
-        List<User> users = userRepository.findAll();
-
-        return users.stream()
-                .map(this::convertToResponseDTO)
+        return userRepository.findAll()
+                .stream()
+                .map(this::convertToResponse)
                 .toList();
     }
 
-
-    // GET USER BY ID
+    // READ BY ID
     public UserResponseDTO getUserById(Long id) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
 
-        return convertToResponseDTO(user);
+        return convertToResponse(user);
     }
 
-
-    // UPDATE USER
+    // UPDATE
     public UserResponseDTO updateUser(Long id, UserRequestDTO request) {
 
         User user = userRepository.findById(id)
@@ -75,11 +71,10 @@ public class UserServices {
 
         User updatedUser = userRepository.save(user);
 
-        return convertToResponseDTO(updatedUser);
+        return convertToResponse(updatedUser);
     }
 
-
-    // DELETE USER
+    // DELETE
     public void deleteUser(Long id) {
 
         if (!userRepository.existsById(id)) {
@@ -89,22 +84,19 @@ public class UserServices {
         userRepository.deleteById(id);
     }
 
-
     // ENTITY → RESPONSE DTO
-    private UserResponseDTO convertToResponseDTO(User user) {
+    private UserResponseDTO convertToResponse(User user) {
 
-        UserResponseDTO response = new UserResponseDTO();
-
-        response.setUserId(user.getUserId());
-        response.setName(user.getName());
-        response.setEmail(user.getEmail());
-        response.setPhone(user.getPhone());
-        response.setUserType(user.getUserType());
-        response.setOrigin(user.getOrigin());
-        response.setDestination(user.getDestination());
-        response.setRoute(user.getRoute());
-        response.setPreferredTime(user.getPreferredTime());
-
-        return response;
+        return new UserResponseDTO(
+                user.getUserId(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getUserType(),
+                user.getOrigin(),
+                user.getDestination(),
+                user.getRoute(),
+                user.getPreferredTime()
+        );
     }
 }

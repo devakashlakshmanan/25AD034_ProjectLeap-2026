@@ -4,52 +4,67 @@ import _AD034_ProjectLeap.work.DTO.UserRequestDTO;
 import _AD034_ProjectLeap.work.DTO.UserResponseDTO;
 import _AD034_ProjectLeap.work.Services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(("/api/users"))
+@RequestMapping("/api/users")
+@CrossOrigin(origins = "*")
 public class UserController {
+
     private final UserServices userServices;
 
     public UserController(UserServices userServices) {
         this.userServices = userServices;
     }
 
+    // CREATE
+    @PostMapping
+    public ResponseEntity<UserResponseDTO> createUser(
+            @RequestBody UserRequestDTO request) {
 
-    // CREATE USER
-    @PostMapping("/create")
-    public UserResponseDTO createUser(@RequestBody UserRequestDTO request) {
-        return userServices.createUser(request);
+        return new ResponseEntity<>(
+                userServices.createUser(request),
+                HttpStatus.CREATED
+        );
     }
 
-    // GET ALL USERS
+    // READ ALL
     @GetMapping
-    public List<UserResponseDTO> getAllUsers() {
-        return userServices.getAllUsers();
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+
+        return ResponseEntity.ok(userServices.getAllUsers());
     }
 
-    // GET USER BY ID
+    // READ BY ID
     @GetMapping("/{id}")
-    public UserResponseDTO getUserById(@PathVariable Long id) {
-        return userServices.getUserById(id);
+    public ResponseEntity<UserResponseDTO> getUserById(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(userServices.getUserById(id));
     }
 
-    // UPDATE USER
+    // UPDATE
     @PutMapping("/{id}")
-    public UserResponseDTO updateUser(
+    public ResponseEntity<UserResponseDTO> updateUser(
             @PathVariable Long id,
             @RequestBody UserRequestDTO request) {
 
-        return userServices.updateUser(id, request);
+        return ResponseEntity.ok(
+                userServices.updateUser(id, request)
+        );
     }
 
-    // DELETE USER
+    // DELETE
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        userServices.deleteUser(id);
-        return "User deleted successfully";
-    }
+    public ResponseEntity<String> deleteUser(
+            @PathVariable Long id) {
 
+        userServices.deleteUser(id);
+
+        return ResponseEntity.ok("User deleted successfully");
+    }
 }

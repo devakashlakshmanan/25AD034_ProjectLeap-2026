@@ -1,27 +1,36 @@
 package _AD034_ProjectLeap.work.Models;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "ride_offers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class RideOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long rideOfferId;
 
-    private String name;
-    private String email;
-    private String phone;
-    private String userType;
+    @ManyToOne
+    @JoinColumn(name = "driver_id", nullable = false)
+    private User driver;
+
     private String origin;
-    private String destination;
-    private String route;
-    private String preferredTime;
 
+    private String destination;
+
+    private String route;
+
+    private String rideDate;
+
+    private String departureTime;
+
+    private Integer availableSeats;
+
+    private String status;
 }

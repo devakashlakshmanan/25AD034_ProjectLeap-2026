@@ -7,17 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponseDTO {
+public class RideOfferRequestDTO {
 
-    private Long userId;
-
-    private String name;
-
-    private String email;
-
-    private String phone;
-
-    private String userType;
+    private Long driverId;
 
     private String origin;
 
@@ -25,5 +17,11 @@ public class UserResponseDTO {
 
     private String route;
 
-    private String preferredTime;
+    private String rideDate;
+
+    private String departureTime;
+
+    private Integer availableSeats;
+
+    private String status;
 }
