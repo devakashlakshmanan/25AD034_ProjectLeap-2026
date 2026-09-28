@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>RideShareLite</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+  <div class="logo">
+    RideShare<span>Lite</span>
+  </div>
+
+  <nav>
+    <button class="nav-btn active" onclick="showSection('dashboard')">
+      Dashboard
+    </button>
+
+    <button class="nav-btn" onclick="showSection('users')">
+      Users
+    </button>
+
+    <button class="nav-btn" onclick="showSection('rides')">
+      Ride Offers
+    </button>
+
+    <button class="nav-btn" onclick="showSection('requests')">
+      Ride Requests
+    </button>
+  </nav>
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+  <!-- ================= DASHBOARD ================= -->
+
+  <section id="dashboard" class="section active-section">
+
+    <div class="hero">
+      <div>
+        <p class="eyebrow">OFFICE & COLLEGE CARPOOL</p>
+
+        <h1>
+          Share your ride.<br>
+          <span>Save your journey.</span>
+        </h1>
+
+        <p class="hero-text">
+          Connect drivers and riders travelling along similar
+          routes and reduce travel costs together.
+        </p>
+
+        <div class="hero-buttons">
+          <button class="primary-btn"
+                  onclick="showSection('rides')">
+            Find a Ride
+          </button>
+
+          <button class="secondary-btn"
+                  onclick="showSection('users')">
+            Register User
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-icon">🚗</div>
+        <h3>Smart Carpooling</h3>
+        <p>
+          Publish your route and connect with people
+          travelling the same way.
+        </p>
+      </div>
+    </div>
+
+
+    <!-- Dashboard statistics -->
+
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-icon">👤</div>
+        <div>
+          <p>Total Users</p>
+          <h2 id="dashboardUsers">0</h2>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🚘</div>
+        <div>
+          <p>Ride Offers</p>
+          <h2 id="dashboardRides">0</h2>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📩</div>
+        <div>
+          <p>Ride Requests</p>
+          <h2 id="dashboardRequests">0</h2>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= USERS ================= -->
+
+  <section id="users" class="section">
+
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">USER MANAGEMENT</p>
+        <h2>Users</h2>
+        <p>Register and manage RideShareLite users.</p>
+      </div>
+    </div>
+
+
+    <div class="content-grid">
+
+      <!-- User form -->
+
+      <div class="form-card">
+
+        <h3>Register User</h3>
+
+        <form id="userForm">
+
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text"
+                   id="userName"
+                   placeholder="Enter name"
+                   required>
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email"
+                     id="userEmail"
+                     placeholder="Enter email"
+                     required>
+            </div>
+
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text"
+                     id="userPhone"
+                     placeholder="Enter phone"
+                     required>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label>User Type</label>
+
+            <select id="userType" required>
+              <option value="">Select type</option>
+              <option value="Student">Student</option>
+              <option value="Employee">Employee</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label>Origin</label>
+              <input type="text"
+                     id="userOrigin"
+                     placeholder="Starting location"
+                     required>
+            </div>
+
+            <div class="form-group">
+              <label>Destination</label>
+              <input type="text"
+                     id="userDestination"
+                     placeholder="Destination"
+                     required>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label>Route</label>
+            <input type="text"
+                   id="userRoute"
+                   placeholder="Example: Pollachi-Coimbatore"
+                   required>
+          </div>
+
+          <div class="form-group">
+            <label>Preferred Time</label>
+            <input type="text"
+                   id="preferredTime"
+                   placeholder="Example: 08:00 AM"
+                   required>
+          </div>
+
+          <button type="submit" class="primary-btn full-btn">
+            Register User
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- Users list -->
+
+      <div class="list-card">
+
+        <div class="card-header">
+          <div>
+            <h3>Registered Users</h3>
+            <p>Users currently stored in the database.</p>
+          </div>
+
+          <button class="small-btn"
+                  onclick="loadUsers()">
+            Refresh
+          </button>
+        </div>
+
+        <div id="usersList" class="data-list">
+          <p class="empty-message">
+            Loading users...
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= RIDE OFFERS ================= -->
+
+  <section id="rides" class="section">
+
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">DRIVER MODULE</p>
+        <h2>Ride Offers</h2>
+        <p>Publish and manage available rides.</p>
+      </div>
+    </div>
+
+
+    <div class="content-grid">
+
+      <!-- Ride Offer form -->
+
+      <div class="form-card">
+
+        <h3>Publish a Ride</h3>
+
+        <form id="rideOfferForm">
+
+          <div class="form-group">
+            <label>Driver</label>
+
+            <select id="driverId" required>
+              <option value="">
+                Select driver
+              </option>
+            </select>
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label>Origin</label>
+              <input type="text"
+                     id="rideOrigin"
+                     placeholder="Starting location"
+                     required>
+            </div>
+
+            <div class="form-group">
+              <label>Destination</label>
+              <input type="text"
+                     id="rideDestination"
+                     placeholder="Destination"
+                     required>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label>Route</label>
+            <input type="text"
+                   id="rideRoute"
+                   placeholder="Example: Pollachi-Coimbatore"
+                   required>
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label>Ride Date</label>
+              <input type="date"
+                     id="rideDate"
+                     required>
+            </div>
+
+            <div class="form-group">
+              <label>Departure Time</label>
+              <input type="text"
+                     id="departureTime"
+                     placeholder="Example: 08:00 AM"
+                     required>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label>Available Seats</label>
+              <input type="number"
+                     id="availableSeats"
+                     min="1"
+                     placeholder="Number of seats"
+                     required>
+            </div>
+
+            <div class="form-group">
+              <label>Status</label>
+
+              <select id="rideStatus" required>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+
+          </div>
+
+          <button type="submit"
+                  class="primary-btn full-btn">
+            Publish Ride
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- Ride list -->
+
+      <div class="list-card">
+
+        <div class="card-header">
+          <div>
+            <h3>Available Ride Offers</h3>
+            <p>Rides retrieved from the backend.</p>
+          </div>
+
+          <button class="small-btn"
+                  onclick="loadRideOffers()">
+            Refresh
+          </button>
+        </div>
+
+        <div id="ridesList" class="data-list">
+          <p class="empty-message">
+            Loading rides...
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= RIDE REQUESTS ================= -->
+
+  <section id="requests" class="section">
+
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">RIDER MODULE</p>
+        <h2>Ride Requests</h2>
+        <p>Request available rides and manage requests.</p>
+      </div>
+    </div>
+
+
+    <div class="content-grid">
+
+      <!-- Request form -->
+
+      <div class="form-card">
+
+        <h3>Request a Ride</h3>
+
+        <form id="rideRequestForm">
+
+          <div class="form-group">
+            <label>Rider</label>
+
+            <select id="riderId" required>
+              <option value="">
+                Select rider
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Ride Offer</label>
+
+            <select id="rideOfferId" required>
+              <option value="">
+                Select ride
+              </option>
+            </select>
+          </div>
+
+          <button type="submit"
+                  class="primary-btn full-btn">
+            Request Ride
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- Request list -->
+
+      <div class="list-card">
+
+        <div class="card-header">
+          <div>
+            <h3>Ride Requests</h3>
+            <p>Requests retrieved from the backend.</p>
+          </div>
+
+          <button class="small-btn"
+                  onclick="loadRideRequests()">
+            Refresh
+          </button>
+        </div>
+
+        <div id="requestsList" class="data-list">
+          <p class="empty-message">
+            Loading requests...
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- ================= NOTIFICATION ================= -->
+
+<div id="notification"
+     class="notification">
+</div>
+
+
+<!-- JavaScript -->
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

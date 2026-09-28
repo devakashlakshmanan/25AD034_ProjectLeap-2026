@@ -1,4 +1,25 @@
 $kind: http-request
-url: ""
-method: GET
+url: http://localhost:8080/api/users
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"name\": \"Dev Akash\",\r
+
+    \    \"email\": \"dev@example.com\",\r
+
+    \    \"phone\": \"9876543210\",\r
+
+    \    \"userType\": \"Student\",\r
+
+    \    \"origin\": \"Pollachi\",\r
+
+    \    \"destination\": \"Coimbatore\",\r
+
+    \    \"route\": \"Pollachi-Coimbatore\",\r
+
+    \    \"preferredTime\": \"08:00 AM\"\r
+
+    }"
 order: 1790573527557
